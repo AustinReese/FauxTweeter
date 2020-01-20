@@ -55,7 +55,7 @@ def generate_tweets(user, num_fake_tweets):
     
 def main():
     user, num_fake_tweets = fetch_user()
-    #scrape_account(user)
+    scrape_account(user)
     generate_tweets(user, num_fake_tweets)
     
     
