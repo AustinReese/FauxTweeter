@@ -42,7 +42,7 @@ def generate_tweets(user, num_fake_tweets):
                   sample_every = 200)
     
     count = 0
-    with open(f"output/{user}", "w") as f:
+    with open(f"output/{user}.txt", "w") as f:
         while count < num_fake_tweets:
             tweets = gpt2.generate(s, return_as_list = True)[:-1]
             for i in tweets:
