@@ -1,6 +1,7 @@
 import urllib.request, urllib.parse, urllib.error,urllib.request,urllib.error,urllib.parse,json,re,datetime,sys,http.cookiejar
 from .. import models
 from pyquery import PyQuery
+from time import sleep
 
 class TweetManager:
 	
@@ -132,9 +133,32 @@ class TweetManager:
 		except:
 			#print("Twitter weird response. Try to see on browser: ", url)
 			print("Twitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(urlGetData))
-			print("Unexpected error:", sys.exc_info()[0])
-			sys.exit()
-			return
+			print("Unexpected error:", sys.exc_info()[0], "will retry in 30 seconds")
+			sleep(30)
+			print("Attempting again...")
+
+			try:
+				response = opener.open(url)
+				jsonResponse = response.read()
+			except:
+				print(
+					"Twitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(
+						urlGetData))
+				print("Unexpected error:", sys.exc_info()[0], "will retry in 60 seconds")
+				sleep(60)
+				print("Attempting one more time...")
+
+				try:
+					response = opener.open(url)
+					jsonResponse = response.read()
+				except:
+					print(
+						"Twitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(
+							urlGetData))
+					print("Unexpected error:", sys.exc_info()[0])
+					print("Rats!")
+					sys.exit()
+					return
 		
 		dataJson = json.loads(jsonResponse.decode())
 		

@@ -1,6 +1,7 @@
 models/
 __pycache__/
 checkpoint/
-output/
+venv/
+.idea/
 *.txt
 *.csv
